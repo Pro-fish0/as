@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, Paper } from '@mui/material';
 import Papa from 'papaparse';
-import { EmployeeSchedule, parseShiftType, isOffDay } from '../types/schedule';
+import { EmployeeSchedule, parseShiftType, isOffDay, getShiftHours } from '../types/schedule';
 
 interface ScheduleInputProps {
   onScheduleImport: (schedules: EmployeeSchedule[]) => void;
@@ -24,6 +24,10 @@ export const ScheduleInput: React.FC<ScheduleInputProps> = ({ onScheduleImport, 
           isOffDay: isOffDay(shift)
         }));
 
+        const workingHours = scheduleEntries.reduce((total, entry) => {
+          return total + getShiftHours(entry.shift);
+        }, 0);
+
         const employeeSchedule: EmployeeSchedule = {
           employee: {
             id: columns[columns.length - 2],
@@ -33,14 +37,9 @@ export const ScheduleInput: React.FC<ScheduleInputProps> = ({ onScheduleImport, 
             employeeNumber: columns[columns.length - 2]
           },
           schedules: scheduleEntries,
-          totalHours: scheduleEntries.reduce((total, entry) => {
-            const hours = entry.shift === 'V' ? 8 : 
-                         entry.shift.includes('8') ? 8 :
-                         entry.shift.includes('10') ? 10 :
-                         entry.shift.includes('11') ? 11 :
-                         entry.shift.includes('12') ? 12 : 0;
-            return total + hours;
-          }, 0)
+          workingHours,
+          requiredHours: 192,  // Initial required hours before vacation adjustments
+          overtime: workingHours - 192  // Initial overtime calculation
         };
 
         schedules.push(employeeSchedule);

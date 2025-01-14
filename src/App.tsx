@@ -68,7 +68,7 @@ function App() {
     const matchesSearch = searchEmployeeId ? 
       schedule.employee.employeeNumber.includes(searchEmployeeId) : true;
     const matchesMissingHours = showMissingHours ? 
-      schedule.totalHours < TARGET_HOURS : true;
+      schedule.overtime < 0 : true;
     return matchesSearch && matchesMissingHours;
   });
 

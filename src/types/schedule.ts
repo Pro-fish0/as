@@ -20,7 +20,9 @@ export interface ScheduleEntry {
 export interface EmployeeSchedule {
   employee: Employee;
   schedules: ScheduleEntry[];
-  totalHours: number;
+  workingHours: number;    // Actual hours worked + vacation coverage
+  requiredHours: number;   // 192 - (8 * number of vacation days on off days)
+  overtime: number;        // workingHours - requiredHours
 }
 
 export interface MonthlySchedule {
@@ -100,51 +102,82 @@ export const adjustScheduleForVacation = (
   if (employeeVacations.length === 0) return schedule;
 
   const [year, month] = selectedMonth.split('-');
+  const yearNum = parseInt(year);
+  const monthNum = parseInt(month);
   
   const updatedSchedules = schedule.schedules.map(entry => {
     const entryDate = new Date(entry.date);
     
+    // Only process if the entry date is in the selected month/year
+    if (entryDate.getFullYear() !== yearNum || entryDate.getMonth() + 1 !== monthNum) {
+      return entry;
+    }
+
     for (const vacation of employeeVacations) {
       const startDate = new Date(vacation.startDate);
       const endDate = new Date(vacation.endDate);
       
-      if (entryDate >= startDate && 
-          entryDate <= endDate && 
-          entryDate.getFullYear() === parseInt(year) &&
-          entryDate.getMonth() + 1 === parseInt(month)) {
-        
+      if (entryDate >= startDate && entryDate <= endDate) {
         const originalHours = getShiftHours(entry.shift);
         const vacationHours = 8;
         
-        return {
-          ...entry,
-          isVacation: true,
-          originalHours: originalHours,
-          shift: 'V' as ShiftType,
-          hoursDifference: originalHours > 0 ? originalHours - vacationHours : 0
-        };
+        // If it's an off day (no shift)
+        if (entry.shift.length === 0) {
+          return {
+            ...entry,
+            isVacation: true,
+            originalHours: 0,
+            shift: 'V' as ShiftType,
+            hoursDifference: 0  // No impact on working hours since it's an off day
+          };
+        } else {
+          // If replacing a shift, calculate uncovered hours
+          const uncoveredHours = Math.max(0, originalHours - vacationHours);
+          return {
+            ...entry,
+            isVacation: true,
+            originalHours: originalHours,
+            shift: 'V' as ShiftType,
+            hoursDifference: uncoveredHours  // Hours that won't count towards working hours
+          };
+        }
       }
     }
     
     return entry;
   });
 
-  const totalHours = updatedSchedules.reduce((total, entry) => {
+  // Count vacation days on off days to reduce required hours
+  const vacationOnOffDays = updatedSchedules.filter(
+    entry => entry.isVacation && (!entry.originalHours || entry.originalHours === 0)
+  ).length;
+
+  // Calculate working hours
+  const workingHours = updatedSchedules.reduce((total, entry) => {
     if (entry.isVacation) {
-      if (entry.originalHours && entry.originalHours > 0) {
-        // If replacing a shift, subtract the difference from total
-        return total - (entry.hoursDifference || 0);
+      if (!entry.originalHours || entry.originalHours === 0) {
+        // Vacation on off day: doesn't add to working hours
+        return total;
       } else {
-        // If it's an off day, add 8 hours
+        // Vacation replacing shift: only count covered hours (8)
         return total + 8;
       }
     }
+    // Regular shift: count all hours
     return total + getShiftHours(entry.shift);
   }, 0);
+
+  // Calculate required hours (192 minus 8 hours for each vacation on off day)
+  const requiredHours = 192 - (vacationOnOffDays * 8);
+  
+  // Calculate overtime (can be negative for missing hours)
+  const overtime = workingHours - requiredHours;
 
   return {
     ...schedule,
     schedules: updatedSchedules,
-    totalHours
+    workingHours,
+    requiredHours,
+    overtime
   };
 }; 

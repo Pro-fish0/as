@@ -1,61 +1,45 @@
+html, body {
+  margin: 0;
+  padding: 20px;
+  align-content: center
+  }
 .app-container {
   width: 100%;
   max-width: 100%;
   margin: 0;
-  padding: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .grid-container {
   width: 100%;
-}
-
-.grid-header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: 10px;
-  padding: 10px;
-}
-
-.filter-controls {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-}
-
-.search-input {
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  width: 200px;
-}
-
-.filter-option {
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
 
 .schedule-display-wrapper {
+  width: 100%;
   display: flex;
   justify-content: center;
-  width: 100%;
-  padding: 20px;
+  padding: 0;
+  direction: rtl;
 }
 
 .schedule-display {
   width: fit-content;
-  min-width: 95%;
-  border: 1px solid #ddd;
+  border: 1px solid #ccd4db;
   border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .schedule-header {
   display: flex;
   background-color: #f8f9fa;
-  border-bottom: 2px solid #dee2e6;
+  border-bottom: 2px solid #ccd4db;
   position: sticky;
   top: 0;
   z-index: 1;
@@ -63,326 +47,80 @@
 
 .fixed-columns {
   display: grid;
-  grid-template-columns: 40px 80px 200px 60px;
+  grid-template-columns: 40px 80px 200px;
   position: sticky;
-  left: 0;
   background-color: #f8f9fa;
   z-index: 2;
-  border-right: 2px solid #dee2e6;
-}
-
-.header-cell {
-  padding: 8px 4px;
-  font-size: 0.9em;
-  font-weight: bold;
-  text-align: center;
-  color: #495057;
-  border-right: 1px solid #dee2e6;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  border-right: 2px solid #ccd4db;
 }
 
 .dates-header {
   display: grid;
   grid-template-columns: repeat(31, 40px);
-  flex-shrink: 0;
 }
 
-.employee-row {
-  display: flex;
-  border-bottom: 1px solid #dee2e6;
-}
-
-.employee-row:hover {
-  background-color: #f8f9fa;
-}
-
-.cell {
-  padding: 8px 4px;
-  text-align: center;
-  border-right: 1px solid #dee2e6;
-  border-bottom: 1px solid #dee2e6;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-height: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.shifts {
+.dates-content {
   display: grid;
   grid-template-columns: repeat(31, 40px);
-  flex-shrink: 0;
-  gap: 0;
-}
-
-.shift {
-  background-color: #e3f2fd;
-  margin: 0;
-  padding: 4px 2px;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.off-day {
-  background-color: #f5f5f5;
-  color: #999;
-  margin: 0;
-  padding: 4px 2px;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.hours-info {
-  min-width: 120px;
-  padding: 8px;
-  position: sticky;
-  right: 0;
-  background-color: #fff;
-  border-left: 2px solid #dee2e6;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.warning {
-  color: #dc3545;
-  font-size: 0.85em;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.total-hours {
-  font-weight: bold;
-  color: #495057;
-}
-
-/* Import view styles */
-.import-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 40px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.import-container h2 {
-  margin-bottom: 20px;
-  color: #495057;
-}
-
-.schedule-input {
-  width: 100%;
-  padding: 16px;
-  border: 1px solid #dee2e6;
-  border-radius: 4px;
-  font-family: monospace;
-  margin-bottom: 20px;
-}
-
-.process-button {
-  padding: 12px 24px;
-  background-color: #0d6efd;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.2s;
-}
-
-.process-button:hover {
-  background-color: #0b5ed7;
-}
-
-.process-button:disabled {
-  background-color: #6c757d;
-  cursor: not-allowed;
-}
-
-.employee-name {
-  text-align: center;
-  direction: rtl;
-}
-
-/* Ensure consistent column widths */
-@media screen and (min-width: 1600px) {
-  .fixed-columns {
-    grid-template-columns: 40px 100px 300px 60px;
-  }
-}
-
-/* Add these new styles */
-.month-selector {
-  margin-bottom: 20px;
-}
-
-.month-selector input {
-  padding: 8px;
-  font-size: 16px;
-  border: 1px solid #dee2e6;
-  border-radius: 4px;
-}
-
-.saved-months {
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 1px solid #dee2e6;
-}
-
-.months-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.month-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  background-color: #f8f9fa;
-  border-radius: 4px;
-}
-
-.month-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.month-actions button {
-  padding: 4px 8px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.delete-button {
-  background-color: #dc3545;
-  color: white;
-}
-
-.schedule-stats {
-  display: grid;
-  grid-template-columns: 80px 80px 80px;
-  position: sticky;
-  right: 0;
-  background-color: #fff;
-  border-left: 2px solid #dee2e6;
 }
 
 .schedule-stats-header {
   display: grid;
-  grid-template-columns: 80px 80px 80px;
+  grid-template-columns: repeat(3, 70px);
   position: sticky;
   right: 0;
   background-color: #f8f9fa;
-  border-left: 2px solid #dee2e6;
+  border-left: 2px solid #ccd4db;
+  z-index: 2;
 }
 
-.vacation-info {
-  min-width: 80px;
-  padding: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-left: 1px solid #dee2e6;
+.schedule-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 70px);
+  position: sticky;
+  right: 0;
+  background-color: white;
+  border-left: 2px solid #ccd4db;
 }
 
-.vacation-days {
-  font-weight: bold;
-  color: #28a745;
-}
-
-.vacation-update-section {
-  margin: 20px 0;
-  padding: 20px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-}
-
-.vacation-input {
-  width: 100%;
-  margin: 10px 0;
-  padding: 10px;
-  font-family: monospace;
-}
-
-.update-button {
-  background-color: #28a745;
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.update-button:disabled {
-  background-color: #6c757d;
-  cursor: not-allowed;
-}
-
-.vacation {
-  background-color: #fff3cd;
-  color: #856404;
-}
-
-.vacation-shift {
-  background-color: #ffeeba;
-  color: #856404;
-  position: relative;
-  border: 1px solid #ffeeba;
-}
-
-.hours-diff {
-  font-size: 0.7em;
-  color: #dc3545;
-  display: block;
-  margin-top: 2px;
-}
-
-/* Add or update these styles */
-.MuiTableCell-root {
+.cell {
+  padding: 6px 2px;
+  text-align: center;
+  border-right: 1px solid #ccd4db;
+  border-bottom: 1px solid #ccd4db;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.shift, .off-day, .vacation {
-  min-width: 45px;
-  height: 45px;
+  min-height: 35px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2px !important;
+  font-size: 0.85em;
+  background: white;
 }
 
-.hours-diff {
-  font-size: 0.7em;
-  color: #dc3545;
-  display: block;
-  margin-top: 2px;
+.header-cell {
+  padding: 8px 4px;
+  font-size: 0.9em;
+  font-weight: 600;
+  text-align: center;
+  color: #2c3e50;
+  border-right: 1px solid #ccd4db;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background-color: #f8f9fa;
 }
 
-.vacation {
-  background-color: #fff3cd;
-  color: #856404;
+.schedule-row {
+  display: flex;
+  border-bottom: 1px solid #ccd4db;
+  min-height: 35px;
+}
+
+.schedule-row:hover {
+  background-color: #f8f9fa;
 }
 
 .shift {
@@ -394,20 +132,75 @@
   color: #999;
 }
 
-/* Make the table container full width but prevent horizontal scroll */
-.MuiTableContainer-root {
-  width: 100%;
-  overflow-x: auto;
+.vacation {
+  background-color: #ffcdd2;
+  color: #c62828;
 }
 
-/* Ensure the table takes full width */
-.MuiTable-root {
-  width: 100%;
-  min-width: max-content;
-}
-
-/* Add new overtime style */
-.overtime {
+.positive {
   color: #28a745;
-  font-weight: bold;
+  font-weight: 600;
 }
+
+.negative {
+  color: #dc3545;
+  font-weight: 600;
+}
+
+.employee-name {
+  text-align: center;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+/* Grid header controls */
+.grid-header {
+  width: fit-content;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.filter-controls {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.search-input {
+  padding: 8px 12px;
+  border: 1px solid #ccd4db;
+  border-radius: 4px;
+  width: 180px;
+  font-size: 0.9em;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9em;
+  color: #2c3e50;
+}
+
+/* Back button styling */
+.back-button {
+  padding: 6px 12px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.2s;
+}
+
+.back-button:hover {
+  background-color: #5a6268;
+}
+

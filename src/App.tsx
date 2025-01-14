@@ -2,13 +2,7 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import { 
   EmployeeSchedule, 
-  ShiftType, 
-  parseShiftType, 
-  isOffDay, 
-  getShiftHours,
-  countVacationDays,
   MonthlySchedule,
-
   parseVacationInput,
   adjustScheduleForVacation
 } from './types/schedule'
@@ -62,10 +56,6 @@ function App() {
       setSelectedMonth(month)
       setShowGrid(true)
     }
-  }
-
-  const calculateTotalHours = (scheduleEntries: { shift: ShiftType }[]): number => {
-    return scheduleEntries.reduce((total, entry) => total + getShiftHours(entry.shift), 0)
   }
 
   const handleScheduleImport = (newSchedules: EmployeeSchedule[]) => {

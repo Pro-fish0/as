@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, Paper } from '@mui/material';
 import Papa from 'papaparse';
-import { EmployeeSchedule, ShiftType, parseShiftType, isOffDay } from '../types/schedule';
+import { EmployeeSchedule, parseShiftType, isOffDay } from '../types/schedule';
 
 interface ScheduleInputProps {
   onScheduleImport: (schedules: EmployeeSchedule[]) => void;

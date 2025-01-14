@@ -131,7 +131,7 @@ export const adjustScheduleForVacation = (
 
   const totalHours = updatedSchedules.reduce((total, entry) => {
     if (entry.isVacation) {
-      if (entry.originalHours > 0) {
+      if (entry.originalHours && entry.originalHours > 0) {
         // If replacing a shift, subtract the difference from total
         return total - (entry.hoursDifference || 0);
       } else {

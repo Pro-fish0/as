@@ -16,7 +16,7 @@ function App() {
   const [searchEmployeeId, setSearchEmployeeId] = useState('')
   const [selectedMonth, setSelectedMonth] = useState('')
   const [savedMonths, setSavedMonths] = useState<MonthlySchedule[]>([])
-  const TARGET_HOURS = 192
+
   const [vacationInput, setVacationInput] = useState('');
 
   // Load saved schedules on mount

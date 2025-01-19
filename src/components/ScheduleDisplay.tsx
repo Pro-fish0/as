@@ -6,7 +6,7 @@ interface ScheduleDisplayProps {
 }
 
 export const ScheduleDisplay: React.FC<ScheduleDisplayProps> = ({ schedules }) => {
-  // Create array of dates from 1 to 31
+  // Create array of dates from 1 to 31 (left to right)
   const dates = Array.from({ length: 31 }, (_, i) => i + 1);
 
   return (
@@ -38,7 +38,7 @@ export const ScheduleDisplay: React.FC<ScheduleDisplayProps> = ({ schedules }) =
                 <div className="cell employee-name">{schedule.employee.name}</div>
               </div>
               <div className="dates-content">
-                {schedule.schedules.map((day, dayIndex) => (
+                {[...schedule.schedules].reverse().map((day, dayIndex) => (
                   <div 
                     key={dayIndex} 
                     className={`cell ${day.isVacation ? 'vacation' : ''} ${!day.shift ? 'off-day' : 'shift'}`}

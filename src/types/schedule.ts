@@ -105,11 +105,15 @@ export const adjustScheduleForVacation = (
   const yearNum = parseInt(year);
   const monthNum = parseInt(month);
   
-  const updatedSchedules = schedule.schedules.map(entry => {
-    const entryDate = new Date(entry.date);
+  // Create a reversed copy of schedules for processing
+  const reversedSchedules = [...schedule.schedules].reverse();
+  
+  const updatedSchedules = reversedSchedules.map((entry, index) => {
+    // Adjust the date to match the reversed index
+    const actualDate = new Date(`${selectedMonth}-${(31 - index).toString().padStart(2, '0')}`);
     
     // Only process if the entry date is in the selected month/year
-    if (entryDate.getFullYear() !== yearNum || entryDate.getMonth() + 1 !== monthNum) {
+    if (actualDate.getFullYear() !== yearNum || actualDate.getMonth() + 1 !== monthNum) {
       return entry;
     }
 
@@ -117,7 +121,7 @@ export const adjustScheduleForVacation = (
       const startDate = new Date(vacation.startDate);
       const endDate = new Date(vacation.endDate);
       
-      if (entryDate >= startDate && entryDate <= endDate) {
+      if (actualDate >= startDate && actualDate <= endDate) {
         const originalHours = getShiftHours(entry.shift);
         const vacationHours = 8;
         
